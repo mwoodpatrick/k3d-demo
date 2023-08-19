@@ -1,0 +1,141 @@
+  mkdir ~/.docker
+  mkdir bin
+  cd bin
+  wget https://github.com/docker/docker-credential-helpers/releases/download/v0.8.0/docker-credential-pass-v0.8.0.linux-amd64
+  mv ~/.docker/bin/docker-credential-pass-v0.8.0.linux-amd64 ~/.docker/bin/docker-credential-pass
+  chmod ug+x docker-credential-pass
+  ./docker-credential-pass -h
+  export PATH="/home/mwoodpatrick/.docker/bin:$PATH"
+  docker login
+
+  pip install --upgrade pip
+  pip --version
+  
+  pass init mwoodpatrick@gmail.com
+  pass insert docker-credential-helpers/docker-pass-initialized-check
+
+  cd $GIT_ROOT/westie-dev-pnpm/kube/k3d
+  git submodule update --init k3d-demo
+  docker build sample/ -f sample/Dockerfile -t mwoodpatrick/sample-app:fuzzy
+  docker push mwoodpatrick/sample-app:fuzzy
+  k3d image import -c demo sample-app:fuzzy
+  k3d image import -c westie-dev sample-app:fuzzy
+  docker pull docker.io/mwoodpatrick/sample-app:fuzzy
+  k3d image import -c westie-dev docker.io/mwoodpatrick/sample-app:fuzzy
+
+  kubectl create namespace demo
+  sudo pacman -Sy kubectx
+  kubens demo
+
+  sudo pacman -Sy chromium
+  chromium --new-window http://sample.k3d.localhost:8080 &>/dev/null &
+
+  k -n demo get all
+  helm list
+  helm uninstall sample-app
+  docker build sample/ -f sample/Dockerfile -t sample-app:local
+  k3d image import -c westie-dev sample-app:local
+  936  k -n demo logs  pod/sample-app-web-5d4546dcdd-vb4s8
+  nvim sample/conf/charts/sample-app/Chart.yaml 
+  nvim sample/conf/charts/sample-app/templates/web.yaml 
+  find sample/ -type f -exec grep -nH serve-develop {} \;
+  944  k -n demo exec -it pod/sample-app-web-5d4546dcdd-vb4s8 -- sh
+  945  k -n demo get all
+  949  nvim sample/conf/charts/sample-app/values.yaml
+  961  helm get values sample-app -a > new_values.yaml
+  962  nvim new_values.yaml 
+  966  k -n demo get all
+  967  h | grep image
+  969  helm upgrade --install sample-app sample/conf/charts/sample-app/ --namespace demo --values new_values.yaml
+  970  k -n demo get all
+  971  nvim sample/conf/charts/sample-app/values.yaml 
+  972  h | grep logs
+  973  k -n demo logs  sample-app-web-5d4546dcdd-vb4s8
+  974  k -n demo get all
+  975  helm list
+  976  helm uninstall sample-app
+  977  helm list
+  978  helm upgrade --install sample-app sample/conf/charts/sample-app/ --namespace demo --values new_values.yaml
+  979  k -n demo get all
+  980  k -n demo logs  pod/sample-app-web-5945bc78dc-4pt52
+  981  k -n demo describe  pod/sample-app-web-5945bc78dc-4pt52
+  982  nvim new_values.yaml 
+  983  ht
+  984  helm upgrade --install sample-app sample/conf/charts/sample-app/ --namespace demo --values new_values.yaml
+  985  k -n demo get all
+  986  k -n demo logs  pod/sample-app-web-57f69d9f4d-gdb6k
+  987  k -n demo describe  pod/sample-app-web-57f69d9f4d-gdb6k|less
+  988  h | grep exec
+  989  k -n demo exec -it sample-app-web-57f69d9f4d-gdb6k -- bash
+  990  nvim new_values.yaml 
+  991  helm upgrade --install sample-app sample/conf/charts/sample-app/ --namespace demo --values new_values.yaml
+  992  k -n demo get all
+  993  nvim new_values.yaml 
+  994  helm upgrade --install sample-app sample/conf/charts/sample-app/ --namespace demo --values new_values.yaml
+  995  k -n demo get all
+  996  k -n demo describe  pod/sample-app-web-59467777c5-sxj2f|less
+  997  k -n demo get  pod/sample-app-web-59467777c5-sxj2f -o yaml|less
+  998  nvim new_values.yaml 
+  999  k -n demo get  pod/sample-app-web-59467777c5-sxj2f -o yaml|less
+ 1000  helm list
+ 1001  helm uninstall sample-app
+ 1002  helm upgrade --install sample-app sample/conf/charts/sample-app/ --namespace demo --values new_values.yaml
+ 1003  k -n demo get all
+ 1004  k -n demo get  pod/sample-app-web-777557977d-hl2fm -o yaml|less
+ 1005  helm uninstall sample-app
+ 1006  k help deploy
+ 1007  k help deploy run
+ 1008  k help run
+ 1009  k run debian --image=debian --command -- bash
+ 1010  k get all
+ 1011  k get ns
+ 1012  k -n archlinux get all
+ 1013  k -n archlinux exec -it -- bash
+ 1014  k -n archlinux exec pod/arch-6f669575fc-7c7br -it -- bash
+ 1015  k -n archlinux get pod/arch-6f669575fc-7c7br -o yaml |less
+ 1016  /bin/sleep 3650d
+ 1017  nvim new_values.yaml 
+ 1018  ht
+ 1019  helm uninstall sample-app
+ 1020  helm list
+ 1021  helm upgrade --install sample-app sample/conf/charts/sample-app/ --namespace demo --values new_values.yaml
+ 1022  k -n demo get all
+ 1023  ht
+ 1024  k run debian --image=debian --command -- bash 3650d
+ 1025  k get pods
+ 1026  k delete pod debian
+ 1027  k run debian --image=debian --command -- bash 3650d
+ 1028  k get pods
+ 1029  k get logs debian
+ 1030  k get log debian
+ 1031  k get logs pods/debian
+ 1032  k logs pods/debian
+ 1033  k delete pod debian
+ 1034  k run debian --image=debian --command -- sleep 3650d
+ 1035  k get pods
+ 1036  k exec -it debian -- bash
+ 1037  nvim new_values.yaml 
+ 1038  ht
+ 1039  k -n get pods
+ 1040  k -n demo get pods
+ 1041  k -n demo exec -it debian -- bash
+ 1042  helm list
+ 1043  helm uninstall sample-app
+ 1044  helm list
+ 1045  ht
+ 1046  helm upgrade --install sample-app sample/conf/charts/sample-app/ --namespace demo --values new_values.yaml
+ 1047  k -n demo get pods
+ 1048  k get pods
+ 1049  helm uninstall sample-app
+ 1050  k get pods
+ 1051  helm list
+ 1052  k get all
+ 1053  k delete pod/debian
+ 1054  k get ns
+ 1055  k get contexts
+ 1056  k get context
+ 1057  alias k
+ 1058  python -V
+ 1059  k get ctx
+ 1060  kubectl config get-contexts
+ 1061  h > hostory.txt

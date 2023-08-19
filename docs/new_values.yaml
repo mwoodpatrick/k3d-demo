@@ -1,0 +1,9 @@
+app:
+  args: '["/bin/sleep", "3650d"]'
+  domain: sample.k3d.localhost
+  env:
+    AUDIENCE: Rancher-Meetup
+  image: debian:latest
+  port: 5000
+  srcFrom: /src
+team: Rancher
